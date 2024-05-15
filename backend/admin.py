@@ -1,3 +1,12 @@
 from django.contrib import admin
+from .models import Meal, Ingredient
 
-# Register your models here.
+
+class IngredientInline(admin.StackedInline):
+    model = Ingredient
+
+class MealAdmin(admin.ModelAdmin):
+    inlines = [IngredientInline]
+
+
+admin.site.register(Meal, MealAdmin)
