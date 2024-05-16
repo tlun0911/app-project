@@ -5,18 +5,18 @@ import { Routes, Route } from "react-router-dom";
 import LoginPanel from "./components/Login/Login";
 import MealList from './components/Meals/MealList';
 import NewMeal from './components/Meals/NewMeal';
+import MealDetail from './components/Meals/MealDetail';
 
 function App() {
   return (
     <Routes>
-    <Route path='/register' element={<RegisterPanel />} />
-    <Route path='' element={ <Home />} />
-    <Route path='/login' element={ <LoginPanel />} />
-    <Route path='/logout' element={ <Home /> } />
-    <Route path='/meal_list' element={ <MealList />} />
-    <Route path='/new_meal' element={ <NewMeal /> } />
-
-
+      <Route path='/register' element={<RegisterPanel />} />
+      <Route path='' element={ <Home />} />
+      <Route path='/login' element={ <LoginPanel />} />
+      <Route path='/logout' element={ <Home /> } />
+      <Route path='/meal_list' element={ <MealList />} />
+      <Route path='/new_meal' element={ <NewMeal /> } />
+      <Route path='/meal/:id' element={ <MealDetail /> } />
     </Routes>
   );
 }

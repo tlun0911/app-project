@@ -24,6 +24,7 @@ const MealList = () =>{
 
     }
 
+
     useEffect(() =>{
         get_meals();
     }, []);
@@ -37,15 +38,18 @@ return(
             <tr className='top-row'>
                 <th>Meal</th>
                 <th>Meal Type</th>
+                <th>Ingredients</th>
             </tr>
             {mealList.map(meal => (
                 <tr>
                     <td>{meal['name']}</td>
                     <td>{meal['type']}</td>
+                    <td>
+                        <a className="btn btn-outline-primary link-opacity-100" href={'/meal/'+meal['id']} role="button">Meal Ingredients</a>
+                    </td>
                 </tr>
             ))}
         </table>
-        {/*<button class="btn btn-primary" type="submit" onClick={submit_delete}>Delete Selected Tasks</button>*/}
 
 
 
