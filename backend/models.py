@@ -23,7 +23,15 @@ class Meal(models.Model):
 class Ingredient(models.Model):
     meal = models.ForeignKey(Meal, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
-    amount = models.CharField(max_length=100, blank=True)
+    quantity = models.CharField(max_length=100, blank=True)
+    UNIT_CHOICES = [
+        ('PKG', 'pkg'),
+        ('LB', 'lb'),
+        ('OZ', 'oz'),
+        ('GAL', 'gal'),
+        ('UNITS', 'units'),
+    ]
+    unit = models.CharField(max_length=50, choices=UNIT_CHOICES, default='UNITS')
 
     def __self__(self):
         return self.name

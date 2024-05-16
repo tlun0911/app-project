@@ -27,4 +27,5 @@ urlpatterns = [
     path('register/', TemplateView.as_view(template_name="index.html")),
     path('meal_list/', TemplateView.as_view(template_name="index.html")),
     path('new_meal/', TemplateView.as_view(template_name='index.html')),
+    path('meal/<int:meal_id>', TemplateView.as_view(template_name='index.html')),
 ]

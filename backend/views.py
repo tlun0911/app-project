@@ -1,23 +1,45 @@
 from django.shortcuts import render
 import json
 from django.contrib.auth.models import User
-from .serializers import MealSerializer
+from .serializers import MealSerializer, IngredientSerializer
 from .models import Meal, Ingredient
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import login, authenticate, logout
 from django.http import JsonResponse
 
 # Create your views here.
+
+@csrf_exempt
+def meal_detail(request, meal_id):
+    meal = Meal.objects.get(id=meal_id)
+    if (request.method == 'GET'):
+        ingredients = meal.ingredient_set.all()
+        serialized_meal = MealSerializer(meal)
+        serialized_ingr = IngredientSerializer(ingredients, many=True)
+        return JsonResponse({'status': '200', 'meal': serialized_meal.data, 'ingredients': serialized_ingr.data})
+    elif (request.method == 'DELETE'):
+        meal.delete()
+        return JsonResponse({'status': '205'})
+
+        
+
 @csrf_exempt
 def submit_meals(request):
     if (request.method == 'POST'):
         user = request.user
         data = json.loads(request.body)
-        for meal in data:
-            name = meal[0]
-            meal_type = meal[1]
-            new_meal = Meal.objects.create(user=user, name=name, type=meal_type)
-            new_meal.save()
+        name = data['name']
+        meal_type= data['type']
+        ingredients = data['ingredients']
+        new_meal = Meal.objects.create(user=user, name=name, type=meal_type)
+        for ingredient in ingredients:
+            if (ingredient[0] != ""):
+                ing_name = ingredient[0]
+                ing_quantity = ingredient[1]
+                ing_unit = ingredient[2]
+                new_ingredient = Ingredient.objects.create(meal=new_meal, name=ing_name, quantity=ing_quantity, unit=ing_unit)
+                new_ingredient.save()
+                
         return JsonResponse({'status': '201'})
     else:
         return JsonResponse({'error': '405 Method not allowed'})
