@@ -17,10 +17,11 @@ const MealDetail = () =>{
           method: "GET"
         });
         const retobj = await res.json();
+        console.log(retobj);
         
         if(retobj.status == '200') {
-          setMeal(retobj['meal']);
-          setIngredients(retobj['ingredients']);
+          setMeal(retobj.data.meal);
+          setIngredients(retobj.data.ingredients);
           console.log(meal);
           console.log(ingredients);
         }
@@ -55,12 +56,12 @@ const MealDetail = () =>{
 
             <div className="card text-bg-info mb-3">
                 <div className="card-header fs-3 fw-bold">
-                    {meal['name']}
+                    {meal.name}
                 </div>
                     <ul className="list-group list-group-flush">
                         {ingredients.map(ingredient => (
-                            <li className="list-group-item" key={ingredient['name']}>
-                                {ingredient['name']}  -  {ingredient['quantity']} {ingredient['unit']}
+                            <li className="list-group-item" key={ingredient.name}>
+                                {ingredient.name}  -  {ingredient.quantity} {ingredient.unit}
                             </li>
                         ))}
                     </ul>
