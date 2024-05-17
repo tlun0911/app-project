@@ -16,7 +16,11 @@ def meal_detail(request, meal_id):
         ingredients = meal.ingredient_set.all()
         serialized_meal = MealSerializer(meal)
         serialized_ingr = IngredientSerializer(ingredients, many=True)
-        return JsonResponse({'status': '200', 'meal': serialized_meal.data, 'ingredients': serialized_ingr.data})
+        data = {
+            'meal': serialized_meal.data,
+            'ingredients': serialized_ingr.data,
+        }
+        return JsonResponse({'status': '200', 'data': data})
     elif (request.method == 'DELETE'):
         meal.delete()
         return JsonResponse({'status': '205'})
